@@ -28,6 +28,16 @@ def roll(turn_total, outcome):
     (1, 0, True)
     """
     "*** YOUR CODE HERE ***"
+    scores = 0
+    turn_total = turn_total + outcome
+    is_over = False
+    if turn_total >= 100:
+        turn_total = 0
+        scores = 1
+        is_over = True
+    if outcome == 1:
+        is_over = True
+    return scores, turn_total, is_over
 
 def hold(turn_total, outcome):
     """Performs the hold action, which adds turn_total to the player's score.

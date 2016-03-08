@@ -77,3 +77,29 @@
 (sqrt 9)
 (sqrt 4)
 (sqrt 2)
+
+(define (abs x)
+  (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))))
+(abs -3)
+(abs 0)
+(abs 2)
+
+(define (abs x)
+  (cond ((> x 0) x)
+        (else (- x))))
+(abs -3)
+(abs 2)
+(abs 0)
+
+(define (>= x y) 
+  (or (> x y)
+      (= x y)))
+(>= 3 3)
+
+(define (abs x)
+  (if (> x 0)
+    x
+    (- x)))
+(abs -2)
