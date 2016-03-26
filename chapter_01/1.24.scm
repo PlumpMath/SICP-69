@@ -1,20 +1,27 @@
 (define (square x) 
   (* x x))
 
-(define (divide? n x) 
-  (= 0 (remainder n x)))
-
-(define (smallest-divisior n) 
-  (find-divisor n 2))
-
-(define (find-divisor n test-divisor)
-  (cond ((> (square test-divisor) n) n)
-        ((divide? n test-divisor) test-divisor)
-        (else 
-          (find-divisor n (+ test-divisor 1)))))
-
 (define (prime? n)
-  (= n (smallest-divisior n)))
+  (fast-prime? n 10))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m))
+                    m))
+        (else
+          (remainder (* base (expmod base (- exp 1) m))
+                     m))))
 
 (define (time-prime-test n)
   (newline)
@@ -41,4 +48,5 @@
     (cond ((< start end) (time-prime-test start) 
                          (search-for-primes (+ start 2) end)))))
 
-(search-for-primes 100000000000000 100000000000030)
+(search-for-primes 1000000000000 1000000000030)
+
